@@ -1,4 +1,4 @@
-d3.json("../data/samples.json").then(function(data) {
+d3.json("./static/data/samples.json").then(function(data) {
     var id_samples = data.names;
     var testMetadata = data.metadata;
 
@@ -35,7 +35,7 @@ function optionChanged() {
     // Initialize an empty array for the country's data
     console.log(userChoice);
 
-    d3.json("../data/samples.json").then(function(data) {
+    d3.json("./static/data/samples.json").then(function(data) {
                 
     // THIS CODE IS TO PLOT THE HORIZONTAL BARS
         // Use sample_values as the values for the bar chart

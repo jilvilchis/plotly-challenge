@@ -1,20 +1,17 @@
 d3.json("../data/samples.json").then(function(data) {
     var id_samples = data.names;
     var testMetadata = data.metadata;
-    // var hovertext = data.otu_labels;
+
     console.log(data);
     console.log(testMetadata);
     console.log(testMetadata[0]);
     console.log(testMetadata[1].ethnicity);
 
-    /* // Test Code
-    var x = `${id_samples[1]}`;
+    /* var x = `${id_samples[1]}`;
     var y = Object.keys(id_samples);
     console.log (y)
-
     var us = Object.values(data.samples[0]);
-    console.log (us);
- */
+     console.log (us);*/
 
 // Using d3 to append a blank option element in the list    
     d3.select("#selDataset").append("option");     
@@ -54,38 +51,20 @@ function optionChanged() {
         
         var traceBar = {
             x: x_values,
-            // y: y_values,
-            // y: `OTU ${y_values.map.toString()}"`,
             y: y_values.map(d => `OTU ${d}`), 
             // meter sort
-            // hovertext: hover_values,
-            // hoverinfo: "y+x",
-            // hovertemplate: "OTU %{y}",
-            // name: "OTU",
+            hovertext: hover_values,
             orientation: 'h',
             type: "bar",
             
         };
         var dataBar = [traceBar];
-        console.log(y_values.map(d => `OTU ${d}`));
+        // console.log(y_values.map(d => `OTU ${d}`));
         var layout = {
             title: 'top 10 OTUs', //`${stock} closing prices`,
-            // xaxis: {
-            //   range: [startDate, endDate],
-            //   type: "date"
-            // },
-            // yaxis: {
-            //   autorange: true,
-            //   type: "linear"
-            // },
-            // showlegend: true,
-            // bargap :0.05,
-            // barmode: 'relative'
-          };
-
+        };
         Plotly.newPlot('bar', dataBar, layout);
-    
-
+  
     // THIS CODE IS TO PLOT THE BUBBLE CHARTS
         // Use otu_ids for the x values
         // Use sample_values for the y values
@@ -93,11 +72,12 @@ function optionChanged() {
         // Use otu_ids for the marker colors
         // Use otu_lables for the text values
     
-        var bubble_x = Object.values(data.samples[userChoice].otu_ids).slice(0,10);
-        var bubble_y = Object.values(data.samples[userChoice].sample_values).slice(0,10);
-        var bubble_size = Object.values(data.samples[userChoice].sample_values).slice(0,10);
-        var bubble_colors = Object.values(data.samples[userChoice].otu_ids).slice(0,10);
-        var bubble_labels = Object.values(data.samples[userChoice].otu_labels).slice(0,10);
+        var bubble_x = Object.values(data.samples[userChoice].otu_ids);
+        var bubble_y = Object.values(data.samples[userChoice].sample_values);
+        var bubble_size = Object.values(data.samples[userChoice].sample_values);
+        var bubble_colors = Object.values(data.samples[userChoice].otu_ids);
+        var bubble_labels = Object.values(data.samples[userChoice].otu_labels);
+        // Note if you want to use only the top ten include .slice(0,10) at the end of each variable definition
         console.log(bubble_x);
         console.log(bubble_y);
         console.log(bubble_size);
@@ -120,8 +100,9 @@ function optionChanged() {
         var layout = {
             title: 'Bubble Chart',
             showlegend: false,
-            height: 600,
-            width: 600
+            // In this case we do not adjust the H & W because we are using col-md-12 in html
+            // height: 600,
+            // width: 600
         };
 
         Plotly.newPlot('bubble', dataBubble, layout);
@@ -143,7 +124,7 @@ function optionChanged() {
 
         //To clear fields
         d3.select("#sample-metadata").html("");
-
+        // To populate the fields
         d3.select("#sample-metadata").append("p").text(`id: ${metadata[0]}`);
         d3.select("#sample-metadata").append("p").text(`ethnicity: ${metadata[1]}`);
         d3.select("#sample-metadata").append("p").text(`gender: ${metadata[2]}`);

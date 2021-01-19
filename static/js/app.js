@@ -52,7 +52,12 @@ function optionChanged() {
         var traceBar = {
             x: x_values,
             y: y_values.map(d => `OTU ${d}`), 
-            // meter sort
+            // Sorting the bars using plotly
+            transforms: [{
+                type: 'sort',
+                target: 'y',
+                order: 'descending'    
+            }],    
             hovertext: hover_values,
             orientation: 'h',
             type: "bar",
